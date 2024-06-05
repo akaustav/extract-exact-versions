@@ -1,5 +1,5 @@
-import packageConfig from '../input/package.json' assert { type: 'json' };
-import packageLockConfig from '../input/package-lock.json' assert { type: 'json' };
+import packageConfig from '../input/package.json' with { type: 'json' };
+import packageLockConfig from '../input/package-lock.json' with { type: 'json' };
 import { createExactPackageObject, writeJSONFile } from './helpers.js';
 
 const { dependencies, devDependencies } = packageConfig;
