@@ -3,11 +3,19 @@ import packageLockConfig from '../input/package-lock.json' with { type: 'json' }
 import { createExactPackageObject, writeJSONFile } from './helpers.js';
 
 const { dependencies, devDependencies } = packageConfig;
-const { packages: lockedPackages } = packageLockConfig;
+const { lockfileVersion = 1 } = packageLockConfig;
+
+let lockedPackages = {};
+
+if (lockfileVersion === 1) {
+  ({ dependencies: lockedPackages } = packageLockConfig);
+} else {
+  ({ packages: lockedPackages } = packageLockConfig);
+}
 
 try {
   const prodPackages = Object.keys(dependencies);
-  const exactProdPackages = createExactPackageObject(prodPackages, lockedPackages);
+  const exactProdPackages = createExactPackageObject(prodPackages, lockedPackages, lockfileVersion);
 
   packageConfig.dependencies = exactProdPackages;
 } catch (error) {
@@ -18,7 +26,7 @@ try {
 
 try {
   const devPackages = Object.keys(devDependencies);
-  const exactDevPackages = createExactPackageObject(devPackages, lockedPackages);
+  const exactDevPackages = createExactPackageObject(devPackages, lockedPackages, lockfileVersion);
 
   packageConfig.devDependencies = exactDevPackages;
 } catch (error) {

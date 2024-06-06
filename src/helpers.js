@@ -1,10 +1,16 @@
 import fs from 'node:fs/promises';
 
-export function createExactPackageObject(packageObj, lockedPackages) {
+export function createExactPackageObject(packageObj, lockedPackages, lockfileVersion) {
   const exactPackages = {};
 
   for (const packageName of packageObj) {
-    const lockedPackage = lockedPackages[`node_modules/${packageName}`];
+    let lockedPackage;
+
+    if (lockfileVersion === 1) {
+      lockedPackage = lockedPackages[packageName];
+    } else {
+      lockedPackage = lockedPackages[`node_modules/${packageName}`]
+    }
 
     if (lockedPackage) {
       exactPackages[packageName] = lockedPackage.version;
