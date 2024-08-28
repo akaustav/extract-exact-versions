@@ -18,4 +18,4 @@ To use:
     1. **Note:** The files in the `input` folder have been ignored from git. So unless you remove the git configuration, you can't accidentally commit these files into this project.
 1. Run `npm start` at the root of the project.
 1. If everything goes as expected, a `package.output.json` file should have been generated in the `output` folder.
-    1. You should be able to safely replace the contents of this file with the contents of the `package.json` file of your project.
+    1. You should be able to safely copy the contents from this file into the `package.json` file of your project.
